@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1>Hello, World</h1>
+		<p>This is a simple web page.</p>
+
+		<script type='text/javascript'>
+			svg = d3.select('body')
+				.append('svg')
+					.attr({
+						width: '800',
+						height: '600'
+						});
+
+			points = []
+			for(n=0; n<100; n++){
+				x = Math.round(Math.random() * 800);
+				y = Math.round(Math.random() * 500);
+				r = Math.random() * 30 + 10;
+				a = Math.random();
+				points.push({'x': x, 'y': y, 'r': r, 'a': a});
+			}
+			svg.selectAll('circle')
+				.data(points)
+				.enter()
+				.append('circle')
+				.attr({
+						'cx': function(d){return d['x'];},
+						'cy': function(d){return d['y'];},
+						'r': function(d){return d['r'];},
+						'fill-opacity': function(d){return d['a'];}
+						});
+		</script>
+</body>
+</html>
+
+
+

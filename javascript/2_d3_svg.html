@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1>Hello, World</h1>
+		<p>This is a simple web page.</p>
+		<p class='mystyle'>...with two paragraphs.</p>
+
+		<script type='text/javascript'>
+			svg = d3.select('body')
+				.append('svg')
+					.attr({
+						width: '800',
+						height: '600'
+						});
+
+			for(n=0; n<100; n++){
+				x = Math.round(Math.random() * 800);
+				y = Math.round(Math.random() * 600);
+				r = Math.random() * 30 + 10;
+
+			svg.append('circle')
+				.attr({'cx': x, 'cy': y, 'r':r, 'fill-opacity': Math.random()})
+			}
+		</script>
+</body>
+</html>
+
+
+
