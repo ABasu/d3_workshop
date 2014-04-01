@@ -4,11 +4,12 @@
 		<meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
 		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	</head>
-	<body>
+	<body style='margin:0 auto; text-align:center'>
 		<h1>Hello, World</h1>
 		<p>This is a simple web page.</p>
 
 		<script type='text/javascript'>
+			// Insert SVG element
 			svg = d3.select('body')
 				.append('svg')
 					.attr({
@@ -16,6 +17,7 @@
 						height: '600'
 						});
 
+			// Generate some data
 			points = []
 			for(n=0; n<100; n++){
 				x = Math.round(Math.random() * 800);
@@ -24,6 +26,8 @@
 				a = Math.random();
 				points.push({'x': x, 'y': y, 'r': r, 'a': a});
 			}
+
+			// Bind the data to svg circle elements
 			svg.selectAll('circle')
 				.data(points)
 				.enter()
@@ -37,6 +41,3 @@
 		</script>
 </body>
 </html>
-
-
-

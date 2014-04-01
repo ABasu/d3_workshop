@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1>A Simple Scatterplot with D3</h1>
+
+		<select id="xmenu">
+			<option value="age">Age</option> 
+			<option value="height">Weight</option>
+			<option value="weight">Height</option>
+			<option value="grade">Grade</option>
+		</select>
+
+		<select id="ymenu">
+			<option value="age">Age</option> 
+		  	<option value="height">Weight</option>
+		  	<option value="weight">Height</option>
+		  	<option value="grade">Grade</option>
+		</select>
+
+		<script type='text/javascript'>
+			var data;
+			var xScale;
+			var yScale;
+			var xSelected;
+			var ySelected;
+
+			// Load the data 
+			d3.csv('somefakedata.csv', function(d){
+				data = d;
+				// First, we initialize the event handlers
+				d3.select('#xmenu').on('change', drawPlot);
+				d3.select('#ymenu').on('change', drawPlot);
+
+				// Insert SVG element
+				svg = d3.select('body')
+					.append('svg')
+						.attr({
+							width: '800',
+							height: '600'
+							});
+				// Set up the scales
+				xScale = d3.scale.linear()
+				.domain([0, d3.max(data, function(q){return parseFloat(q['Age'])})])
+							.range([10, 790]);
+				yScale = d3.scale.linear()
+							.domain([0, d3.max(data, function(q){return parseFloat(q['Height'])})])
+							.range([590, 10]);
+
+				// Bind the data to svg circle elements
+				svg.selectAll('circle')
+					.data(data)
+					.enter()
+					.append('circle')
+					.attr({
+							'cx': function(q){return xScale(q['Age']);},
+							'cy': function(q){return yScale(q['Height']);},
+							'r': function(q){return 5;},
+							'fill-opacity': function(i){return .5;}
+							});
+				});
+
+			function drawPlot(){
+				features = ['Age', 'Weight', 'Height', 'Grade']
+				x = d3.select('#xmenu').node().options.selectedIndex;
+				y = d3.select('#ymenu').node().options.selectedIndex;
+				x = features[x];
+				y = features[y];
+
+				// Set up the scales
+				xScale.domain([0, d3.max(data, function(q){return parseFloat(q[x])})]);
+				yScale.domain([0, d3.max(data, function(q){return parseFloat(q[y])})]);
+
+				svg.selectAll('circle')
+					.data(data)
+					.transition()
+					.duration(1000)
+					.attr({
+							'cx': function(q){return xScale(q[x]);},
+							'cy': function(q){return yScale(q[y]);},
+							'r': function(i){return 5;},
+							'fill-opacity': function(i){return .5;}
+							});
+			}
+
+		</script>
+</body>
+</html>

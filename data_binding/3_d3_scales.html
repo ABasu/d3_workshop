@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	</head>
+	<body style='margin:0 auto; text-align:center'>
+		<h1>A Simple Scatterplot with D3</h1>
+
+		<script type='text/javascript'>
+			// Insert SVG element
+			svg = d3.select('body')
+				.append('svg')
+					.attr({
+						width: '800',
+						height: '600'
+						});
+
+			// Generate some data
+			d3.csv('somefakedata.csv', function(d){
+				// Set up the scales
+				xScale = d3.scale.linear()
+				.domain([0, d3.max(d, function(q){return q['Weight']})])
+							.range([0, 800])
+				yScale = d3.scale.linear()
+				.domain([0, d3.max(d, function(q){return q['Height']})])
+							.range([600, 0])
+
+				// Bind the data to svg circle elements
+				svg.selectAll('circle')
+					.data(d)
+					.enter()
+					.append('circle')
+					.attr({
+							'cx': function(i){return xScale(i['Weight']);},
+							'cy': function(i){return yScale(i['Height']);},
+							'r': function(i){return 5;},
+							'fill-opacity': function(i){return .5;}
+							});
+				});
+
+		</script>
+</body>
+</html>
